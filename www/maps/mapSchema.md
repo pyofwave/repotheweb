@@ -10,7 +10,7 @@ The format of map URLs are compatible with normal URL formats, but the path comp
 
 BNF notation for this format is:
 
-    root ::= "map:///" < layer > { "&" < layer > } [ "#" < zoom > ] [ "?" < urlParams > ]
+    root ::= "map:" [ "///" ] < layer > { "&" < layer > } [ "#" < zoom > ] [ "?" < urlParams > ]
     layer ::= < locschema > [ ":" < sublocschema > ] [ "/" < loccontent > ]
     zoom ::= < number > | < bbox >
 		bbox ::= < sublocschema > < number > "," < number > ":" < number > "x" < number >
@@ -24,6 +24,8 @@ From "root" where the undefined syntax means:
 - number: a sequence of numerical digits. 
 
 The syntax marked as optional in the layer syntax may be required by some location schemas, while in the others it is ignored. 
+
+Including the triple slash or not makes no difference. 
 
 ###Defination###
 
@@ -127,25 +129,39 @@ Sets the "controls" rendered on top of the map. The meaning of this is left leni
 
 This paramater is optional for implementation. It's value is a URL to a GSS file to be used to style the map. GSS is defined later in this standard.
 
+###dir###
+
+The value of this paramater is a bearing representing which direction up the screen should represent. Defaults to zero. 
+
 ##Cross Document Messaging##
 
 Once downloaded, a mapping service MAY allow communication with the source site via W3C's Cross Document Messaging standard. 
 
-###Format from map to parent###
-
-TODO: Define syntax
-
 ###Format from parent to map###
 
-TODO: Define syntax
+Can be defined by the BNF:
+
+    < word > { "." < word > } [ [ "+" | "-" ] "=" < json > ]
+
+where word is an alpha-numeric word and JSON is standard JSON syntax.
+
+The dot seperated word represents the JSON path of the property you want to get or set. The "+" or "-" changes the assignment into incrementation and deincrementation, while the JSON is the value it's changed by or set to.
+
+If no JSON is given, triggers the map service to report the value of the property. Available are listed later. 
+
+###Format from map to parent###
+
+Whenever a value changes, the map service sends the same syntax to the parent as the parent sends it. This syntax contains both the name of the changed value and the property.
+
+When the parent sends a property, the map service responds in this syntax
 
 ###Properties###
 
 The Properties the Cross Document Messaging, as defined in the previous two subsections, (with Google Maps inspiration) are:
 
-- bounds -- The current bounding box of the map. Has properties x, y, width, and height as numbers in the provided projection or latlon.
+- bbox -- The current bounding box of the map. Has properties x, y, width, and height as numbers in the provided projection or latlon.
 - center -- The current central point of the map. Has properties x and y as numbers in the provided projection or latlon.
-- direction -- The direction represented going up the screen as a bearing. 
+- dir -- The direction represented going up the screen as a bearing. 
 - type -- The map displayed as a string. One of road, sattelite, hybrid, or terrain.
 - zoom -- The zoom level of the map as a number.
 - layers -- The layers/locations rendered on the map. Represented as an array of objects with the properties schema, subschema, location, and detailURL as in the original URL.
