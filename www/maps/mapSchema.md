@@ -49,15 +49,15 @@ Since there's multiple ways to describe a position on Earth, each one has it's o
 
 The "address" location schema is defined as the simplest and most accurate location schema. It has no sub schemas and simple syntax, but can only define roadside locations. 
 
-It's content is a standard address with a single comma (,) and no space seperating each component. Where a component contains spaces an underscore (_) may be used instead. It may be postfixed with a detail URL.
+It's content is a standard street address with a single comma (,) and no space seperating each component. Where a component contains spaces an underscore (_) may be used instead. It may be postfixed with a detail URL.
 
 ###name###
 
 The "name" location schema is simalor to address, but can only be used on locations that country has a official name for. It's sub schemas are ISO country codes and it's content is the official name of a location. It may be postfixed with a detail URL.
 
-###proj###
+###coord###
 
-The "proj" location schema provides a way to place a marker in a specific schema, but it's relation to objects in the base layer may change dependant on provider. 
+The "coord" location schema provides a way to place a marker in a specific schema, but it's relation to objects in the base layer may change dependant on provider. 
 
 The subschema is the standard used by the content, as the number of an EPSG standard, defaulting to 4326 (WGS84, latitude&longitude). The content is two numbers in that projection standard defined by the subschema seperated by a comma (,). It may be postfixed with a detail URL. 
 
