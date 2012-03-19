@@ -13,7 +13,7 @@ BNF notation for this format is:
     root ::= "map:" [ "///" ] < layer > { "&" < layer > } [ "#" < zoom > ] [ "?" < urlParams > ]
     layer ::= < locschema > [ ":" < sublocschema > ] [ "/" < loccontent > ]
     zoom ::= < number > | < bbox >
-    bbox ::= < sublocschema > < number "p1-x" > "," < number "p1-y" > ":" < number  "p2-x" > "," < number "p2-y" >
+    bbox ::= [ < number "projection" > "/" ] < number "p1-x" > "," < number "p1-y" > ":" < number  "p2-x" > "," < number "p2-y" >
 
 From "root" where the undefined syntax means:
 
@@ -25,8 +25,6 @@ From "root" where the undefined syntax means:
 
 The syntax marked as optional in the layer syntax may be required by some location schemas, while in the others it is ignored. 
 
-The sublocschema in th bbox syntax is a web sub
-
 Including the triple slash or not makes no difference. 
 
 ###Defination###
@@ -37,7 +35,7 @@ When a mapping service opens a map URL, it should render it's base layer and do 
 - If "zoom" is a number, center on the first marker and zoom to that level.
 - If it is a "bbox" syntax:
 
-	- Size your map to the rectangle defined by the numbers according to the projection standard in the "sublocschema" prefix.
+	- Size your map to the rectangle defined by the points p1 & p2 according to the projection standard in the optional "projection" prefix, defaulting to 4326 (WGS84, latitude&longitude).
 
 - Take into account the parameters, which are defined later in this standard.
 
