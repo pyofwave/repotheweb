@@ -13,7 +13,7 @@ BNF notation for this format is:
     root ::= "map:" [ "///" ] < layer > { "&" < layer > } [ "#" < zoom > ] [ "?" < urlParams > ]
     layer ::= < locschema > [ ":" < sublocschema > ] [ "/" < loccontent > ]
     zoom ::= < number > | < bbox >
-		bbox ::= < sublocschema > < number > "," < number > ":" < number > "x" < number >
+    bbox ::= < sublocschema > < number "p1-x" > "," < number "p1-y" > ":" < number  "p2-x" > "," < number "p2-y" >
 
 From "root" where the undefined syntax means:
 
@@ -24,6 +24,8 @@ From "root" where the undefined syntax means:
 - number: a sequence of numerical digits. 
 
 The syntax marked as optional in the layer syntax may be required by some location schemas, while in the others it is ignored. 
+
+The sublocschema in th bbox syntax is a web sub
 
 Including the triple slash or not makes no difference. 
 
