@@ -59,13 +59,7 @@ The "name" location schema is simalor to address, but can only be used on locati
 
 The "proj" location schema provides a way to place a marker in a specific schema, but it's relation to objects in the base layer may change dependant on provider. 
 
-The subschema is the standard used by the content, defaulting to latitude&longitude ("latlon"). The content is two numbers in that projection standard defined by the subschema seperated by a comma (,). It may be postfixed with a detail URL. 
-
-Supported subschemas/projections include:
-
-- TODO: define a list of supported projections.
-- latlon (latitude&longitude)
-- more may be supported by mapping services
+The subschema is the standard used by the content, as the number of an EPSG standard, defaulting to 4326 (WGS84, latitude&longitude). The content is two numbers in that projection standard defined by the subschema seperated by a comma (,). It may be postfixed with a detail URL. 
 
 ###web###
 
