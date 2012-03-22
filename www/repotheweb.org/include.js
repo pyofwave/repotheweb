@@ -833,7 +833,7 @@ define('utils', ['onready', 'config'],
            var doc = document,
              iframe = doc.createElement("iframe");
            // iframe.style.display = "none";
-           doc.body.appendChild(iframe);
+           // doc.body.appendChild(iframe);
            iframe.src = config.ipServer + "/rph_iframe.html";
            iframe.style.position = 'absolute';
            iframe.style.left = -7000;
@@ -881,8 +881,8 @@ define(
                     return url;  // no change
                 }
                 // ensure handler_list exists
-                fallback = document.querySelector('meta[name=fallback-rph][protocol=' + scheme + ']').content;
-								fallback = fallback ? '?' + escape(fallback) : ''; // Include the fallback if it exists
+                fallback = document.querySelector('meta[name=fallback-rph][protocol=' + scheme + ']');
+								fallback = fallback ? '?' + escape(fallback.content) : ''; // Include the fallback if it exists
                 return config.ipServer + fallback + '#' + url;
             }, /* simulate_rph */
         };
@@ -941,6 +941,8 @@ require(
 
             }
 
+						/* <a>, <area> */
+
             document.onclick = function(e) {
 								/* Correct IE, partially in vain */
 								var target;
@@ -948,14 +950,19 @@ require(
                 if (e.target) target = e.target
 								else target = e.srcElement;
 
-                if (target.nodeName.toLowerCase() != "a") return;  // Only activate on <a> tags
+								if (["a", "area"].indexOf(target.nodeName.toLowerCase())) return;
+                // if (target.nodeName.toLowerCase() != "a") return;  // Only activate on <a> tags
 
 								/* Go to the altered URL returned by the simulation */
                 open(sim.simulate_rph(target.href), target.target ? target.target : "_self");
 								return false;
             }
 
+						/* Custom API that can be used to ensure the browser APIs work. */
+						location.url = sim.simulate_rph;
+
         } // end if
+				else location.url = function(url) {return url;} // Keep custom API support.
     }); // end require
 ;
 define("include", function(){});

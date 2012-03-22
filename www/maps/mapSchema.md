@@ -8,7 +8,7 @@ Beyond being a demo schema, it is intended to be built upon to create a real wor
 
 The format of map URLs are compatible with normal URL formats, but the path component appears slightly different. 
 
-BNF notation for this format is:
+EBNF notation for this format is:
 
     root ::= "map:" [ "///" ] < layer > { "&" < layer > } [ "#" < zoom > ] [ "?" < urlParams > ]
     layer ::= < locschema > [ ":" < sublocschema > ] [ "/" < loccontent > ]
@@ -95,20 +95,20 @@ To control the appearance of the map, a number of paramaters can be set in the U
 
 ###type###
 
-The "type" paramater controls which map the service renders. The standard options for this paramater are:
+The "type" paramater controls which map or base layer the service renders. The standard options for this paramater are:
 
-- road
+- road (default)
 - sattelite
 - hybrid
 - terrain
 
 ###lang###
 
-Controls the language the map is rendered in. It is in the format cc-cc where cc is an ISO country code. The first country code represents the language, while the second represents a specific dialect.
+Controls the language the map is rendered in. It is in the format cc-cc where cc is an ISO country code. The first country code represents the language, while the second represents a specific dialect. Defaults to the Accept-Language HTTP header, but the mapping service MAY allow the user to alter this default. 
 
 ###local###
 
-Controls the local conventions used on the map. The value should be an ISO country code.
+Controls the local conventions used on the map. The value should be an ISO country code. By default, it is derived from the language, but the service MAY allow the user to alter this default. 
 
 ###control###
 
@@ -118,6 +118,8 @@ Sets the "controls" rendered on top of the map. The meaning of this is left leni
 - pan
 - type
 - scale
+
+Default is service dependant. 
 
 ###style###
 
@@ -133,7 +135,7 @@ Once downloaded, a mapping service MAY allow communication with the source site 
 
 ###Format from parent to map###
 
-Can be defined by the BNF:
+The format for the parent to send messages (via sendMessage JavaScript function) to the mapping service can be defined by the EBNF:
 
     < word > { "." < word > } [ [ "+" | "-" ] "=" < json > ]
 
@@ -141,13 +143,13 @@ where word is an alpha-numeric word and JSON is standard JSON syntax.
 
 The dot seperated word represents the JSON path of the property you want to get or set. The "+" or "-" changes the assignment into incrementation and deincrementation, while the JSON is the value it's changed by or set to.
 
-If no JSON is given, triggers the map service to report the value of the property. Available are listed later. 
+If no JSON is given, triggers the map service to report the value of the property. Available properties are listed later. 
 
 ###Format from map to parent###
 
-Whenever a value changes, the map service sends the same syntax to the parent as the parent sends it. This syntax contains both the name of the changed value and the property.
+Whenever a value changes, the map service sends the same syntax to the parent as the parent sends it. This syntax contains both the name of the changed property and the value.
 
-When the parent sends a property, the map service responds in this syntax
+When the parent sends a property, the map service responds in this syntax containing the property name and it's value. 
 
 ###Properties###
 

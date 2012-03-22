@@ -13,13 +13,14 @@
 	<h1>Repo is COOL!!!!</h1>
 	<p>I've been linking to music using RepoTheWeb, and I just wanted to show off it's capabilities. Ofcourse it can do links, but it can also:</p>
 	<ul>
-		<li class="link" onclick="open('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b', 'music');">Works with window.open()</li>
-		<li class="link" onclick="location.assign('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b');">location.assign()</li>
-		<li class="link" onclick="location.replace('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b');">location.replace()</li>
+		<li class="link" onclick="window.open(location.url('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b'), '_new');">Works with window.open()</li>
+		<li class="link" onclick="location.assign(location.url('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b'));">location.assign()</li>
+		<li class="link" onclick="location.replace(location.url('music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b'));">location.replace()</li>
 	</ul>
-	<p>And even iframes:</p>
-	<!-- <iframe src="music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b">
+	<p>And even iframes (with some workaround):</p>
+	<iframe src="about:blank" name="music" id="music">
 		You should see the music protocol loading in here.
-	</iframe> --> <!-- The alert's distracting -->
+	</iframe>
+	<a href="music:musicbrainz.org/release/a5bbcaf9-5387-33e2-9411-902ac263666b" target="music">Show in iframe</a>
 </body>
 </html>

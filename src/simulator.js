@@ -23,8 +23,8 @@ define(
                     return url;  // no change
                 }
                 // ensure handler_list exists
-                fallback = document.querySelector('meta[name=fallback-rph][protocol=' + scheme + ']').content;
-								fallback = fallback ? '?' + escape(fallback) : ''; // Include the fallback if it exists
+                fallback = document.querySelector('meta[name=fallback-rph][protocol=' + scheme + ']');
+								fallback = fallback ? '?' + escape(fallback.content) : ''; // Include the fallback if it exists
                 return config.ipServer + fallback + '#' + url;
             }, /* simulate_rph */
         };
