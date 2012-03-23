@@ -104,7 +104,7 @@ The "type" paramater controls which map or base layer the service renders. The s
 
 ###lang###
 
-Controls the language the map is rendered in. It is in the format cc-cc where cc is an ISO country code. The first country code represents the language, while the second represents a specific dialect. Defaults to the Accept-Language HTTP header, but the mapping service MAY allow the user to alter this default. 
+Controls the language the map is rendered in. It is in the format cc-cc where cc is an ISO code. The first ISO code is a language code, while the second is a country code representing a specific dialect. Defaults to the Accept-Language HTTP header or equivalant, but the mapping service MAY allow the user to alter this default. 
 
 ###local###
 
