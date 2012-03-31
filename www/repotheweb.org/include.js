@@ -851,6 +851,43 @@ define('utils', ['onready', 'config'],
 									link.href = "/favicon.ico";
 									return link.href;
 								},
+								/* On is used to ensure handlers aren't unintionally overwritten */
+								on : function(el, event, handler) {
+									if (el.addEventListener)
+										el.addEventListener(event, handler);
+									else
+										el.attachEvent('on'+event, function() {handler(event);});
+								},
+								/* Artificially submit forms */
+								serialize: function(form) {
+									if (!form || !form.elements) return;
+
+									var serial = [], i, j, first;
+									var add = function (name, value) {
+										serial.push(encodeURIComponent(name) + (value.length ? '=' + encodeURIComponent(value) : ''));
+									}
+
+									var elems = form.elements;
+									for (i = 0; i < elems.length; i += 1, first = false) {
+										if (elems[i].name.length) { /* don't include unnamed elements */
+											switch (elems[i].type) {
+												case 'select-one': first = true;
+												case 'select-multiple':
+													for (j = 0; j < elems[i].options.length; j += 1)
+														if (elems[i].options[j].selected) {
+															add(elems[i].name, elems[i].options[j].value);
+															if (first) break; /* stop searching for select-one */
+														}
+													break;
+												case 'checkbox':
+												case 'radio': if (!elems[i].checked) break; /* else continue */
+												default: add(elems[i].name, elems[i].value); break;
+											}
+										}
+									}
+
+									return serial.join('&');
+								}
            };
        });
 
@@ -941,25 +978,43 @@ require(
 
             }
 
-						/* <a>, <area> */
+						/* <a>, <area>, etc. All added elements, before or after page load. */
 
-            document.onclick = function(e) {
+						utils.on(document, 'click', function(e) {
 								/* Correct IE, partially in vain */
 								var target;
-                if (!e) e = window.event;
                 if (e.target) target = e.target
 								else target = e.srcElement;
 
-								if (["a", "area"].indexOf(target.nodeName.toLowerCase())) return;
-                // if (target.nodeName.toLowerCase() != "a") return;  // Only activate on <a> tags
+								if (!target.hasAttribute('href')) return; // Only activate if the tag is a link, HTML5 style
 
 								/* Go to the altered URL returned by the simulation */
                 open(sim.simulate_rph(target.href), target.target ? target.target : "_self");
+								e.preventDefault();
 								return false;
-            }
+            });
 
 						/* Custom API that can be used to ensure the browser APIs work. */
 						location.url = sim.simulate_rph;
+
+						/* <form> Applies onready */
+						function submit(e) {
+							el = this;
+							if (e.srcElement) el = e.srcElement;
+
+							if (el.method == "GET") { // only supports GET, POST doesn't have APIs to my knowledge
+								location.replace(sim.simulate_rph(el.action + '?' + utils.serialize(el)));
+								e.preventDefault();
+								return false;
+							}
+						}
+
+						$(function() {
+						var forms = document.getElementsByTagName('form');
+						for (var i; i < forms.length; i++) {
+							utils.on(forms[i], 'submit', submit);
+						}
+						});
 
         } // end if
 				else location.url = function(url) {return url;} // Keep custom API support.

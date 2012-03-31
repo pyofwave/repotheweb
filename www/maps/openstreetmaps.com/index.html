@@ -1,0 +1,99 @@
+<!DOCTYPE html>
+<html>
+<head>
+	<meta name="viewport" content="initial-scale=1.0, user-scalable=no" />
+	<title>OpenStreetMaps</title>
+	<style type="text/css">
+		html, body, #map {width: 100%; height: 100%; margin: 0;}
+	</style>
+	<script src="http://www.openlayers.org/api/OpenLayers.js"></script>
+	<script> /* ParseUri */
+		function parseUri (str) {
+			var o = parseUri.options,
+			m = o.parser[o.strictMode ? "strict" : "loose"].exec(str),
+			uri = {},
+			i = 14;
+
+			while (i--) uri[o.key[i]] = m[i] || "";
+
+			uri[o.q.name] = {};
+			uri[o.key[12]].replace(o.q.parser, function ($0, $1, $2) {
+				if ($1) uri[o.q.name][$1] = $2;
+			});
+
+			return uri;
+		};
+
+		parseUri.options = {
+			strictMode: false,
+			key: ["source","protocol","authority","userInfo","user","password","host","port","relative","path","directory","file","query","anchor"],
+			q: {
+				name: "queryKey",
+				parser: /(?:^|&)([^&=]*)=?([^&]*)/g
+			},
+			parser: {
+				strict: /^(?:([^:\/?#]+):)?(?:\/\/((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?))?((((?:[^?#\/]*\/)*)([^?#]*))(?:\?([^#]*))?(?:#(.*))?)/,
+				loose: /^(?:(?![^:@]+:[^:@\/]*@)([^:\/?#.]+):)?(?:\/\/)?((?:(([^:@]*)(?::([^:@]*))?)?@)?([^:\/?#]*)(?::(\d*))?)(((\/(?:[^?#](?![^?#\/]*\.[^?#\/.]+(?:[?#]|$)))*\/?)?([^?#\/]*))(?:\?([^#]*))?(?:#(.*))?)/
+			}
+		};
+	</script>
+	<script>
+		var OL = OpenLayers, markers, map; // need a global reference to markers and map.
+
+		// setup icon
+		// var size = new OpenLayers.Size(21,25), offset = new OpenLayers.Pixel(-(size.w/2), -size.h), icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
+		var locSchemas = {
+			'address' : function(address) {
+				/* Geocode address */
+				// call nomination: nomination.openstreetmaps.org/search?q=%s&format=json
+				// markers.addMarker(new OL.LonLat(res.lon, res.lat),icon.clone());
+			},
+			'gps' : function() {
+				/* Load user's geolocation */
+			}
+		}
+		function init() {
+			map = new OL.Map("map");
+			var mapnik = new OL.Layer.OSM();
+			map.addLayer(mapnik);
+			markers = new OL.layer.Markers("Locations")
+			map.addLayer(markers);
+			map.zoomToMaxExtent();
+			if (location.hash) {
+				var mapURL = parseUri(location.hash.substr(1));
+				var path = mapURL.path.split('&'), query = mapURL.queryKey, zoom = mapURL.anchor;
+				for (var i; i < path.length; i++) {
+					var parts = path[i].split('/'),
+						schema = parts[0].split(':');
+					locSchemas[schema[0]](parts.slice(1), schema[1]);
+				}
+
+				/* Zoom */
+				if (zoom.indexOf(':') == -1) 
+					map.zoomTo(parseInt(zoom));
+				else {
+					/* parse bounds */
+					var bounds = new OL.Bounds(), proj, pt1, p2, parts; // parts is a temporary variable for parsing
+					if (zoom.indexof('/') != -1) {
+						parts = zoom.split('/');
+						proj = parts[0]; zoom = parts[1];
+					}
+					else proj = 4326;
+
+					parts = zoom.split(':');
+					pt1 = parts[0].split(','); pt2 = parts[0].split(',');
+					
+					bounds.extend(new OL.LonLat(pt1[0],pt1[1])); // TODO: Use projection
+					bounds.extend(new OL.lonLat(pt2[0],pt2[1]));
+					
+					/* apply */
+					map.zoomToExtent(bounds);
+				}
+			}
+		}
+	</script>
+</head>
+<body onload="init();">
+	<div id="map"></div>
+</body>
+</html>

@@ -21,6 +21,43 @@ define('utils', ['onready', 'config'],
 									link.href = "/favicon.ico";
 									return link.href;
 								},
+								/* On is used to ensure handlers aren't unintionally overwritten */
+								on : function(el, event, handler) {
+									if (el.addEventListener)
+										el.addEventListener(event, handler);
+									else
+										el.attachEvent('on'+event, function() {handler(event);});
+								},
+								/* Artificially submit forms */
+								serialize: function(form) {
+									if (!form || !form.elements) return;
+
+									var serial = [], i, j, first;
+									var add = function (name, value) {
+										serial.push(encodeURIComponent(name) + (value.length ? '=' + encodeURIComponent(value) : ''));
+									}
+
+									var elems = form.elements;
+									for (i = 0; i < elems.length; i += 1, first = false) {
+										if (elems[i].name.length) { /* don't include unnamed elements */
+											switch (elems[i].type) {
+												case 'select-one': first = true;
+												case 'select-multiple':
+													for (j = 0; j < elems[i].options.length; j += 1)
+														if (elems[i].options[j].selected) {
+															add(elems[i].name, elems[i].options[j].value);
+															if (first) break; /* stop searching for select-one */
+														}
+													break;
+												case 'checkbox':
+												case 'radio': if (!elems[i].checked) break; /* else continue */
+												default: add(elems[i].name, elems[i].value); break;
+											}
+										}
+									}
+
+									return serial.join('&');
+								}
            };
        });
 

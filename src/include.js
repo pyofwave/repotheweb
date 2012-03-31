@@ -49,25 +49,43 @@ require(
 
             }
 
-						/* <a>, <area> */
+						/* <a>, <area>, etc. All added elements, before or after page load. */
 
-            document.onclick = function(e) {
+						utils.on(document, 'click', function(e) {
 								/* Correct IE, partially in vain */
 								var target;
-                if (!e) e = window.event;
                 if (e.target) target = e.target
 								else target = e.srcElement;
 
-								if (["a", "area"].indexOf(target.nodeName.toLowerCase())) return;
-                // if (target.nodeName.toLowerCase() != "a") return;  // Only activate on <a> tags
+								if (!target.hasAttribute('href')) return; // Only activate if the tag is a link, HTML5 style
 
 								/* Go to the altered URL returned by the simulation */
                 open(sim.simulate_rph(target.href), target.target ? target.target : "_self");
+								e.preventDefault();
 								return false;
-            }
+            });
 
 						/* Custom API that can be used to ensure the browser APIs work. */
 						location.url = sim.simulate_rph;
+
+						/* <form> Applies onready */
+						function submit(e) {
+							el = this;
+							if (e.srcElement) el = e.srcElement;
+
+							if (el.method == "GET") { // only supports GET, POST doesn't have APIs to my knowledge
+								location.replace(sim.simulate_rph(el.action + '?' + utils.serialize(el)));
+								e.preventDefault();
+								return false;
+							}
+						}
+
+						$(function() {
+						var forms = document.getElementsByTagName('form');
+						for (var i; i < forms.length; i++) {
+							utils.on(forms[i], 'submit', submit);
+						}
+						});
 
         } // end if
 				else location.url = function(url) {return url;} // Keep custom API support.
