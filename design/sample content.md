@@ -75,8 +75,16 @@ This file represents a start to compiling sample content to design a scalable co
 
 - repo (decentralizes Git/Mercurial/Bazaar development even more)
 
-        - github.com
-        - code.google.com
-        - sourceforge.com
-        - launchpad.net
-        - bitbucket.org
+	- github.com
+	- code.google.com
+	- sourceforge.com
+	- launchpad.net
+	- bitbucket.org
+
+
+- mailto (sends an email)
+
+	- mail.google.com
+	- fastmail.fm
+	- mail.yahoo.com
+	- hotmail.com

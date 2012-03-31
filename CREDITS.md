@@ -25,3 +25,15 @@ Last, but not least, are the people who brought these together:
 
 - Austin King "ozten" -- Project Manager
 - Adrian Cochrane "alcinnz" -- Major initial work
+
+I, Adrian Cochrane, have been helped after getting this to work, on getting it to work well. RepoTheWeb will be a much nicer project after their help.
+
+- Byron Cochrane
+
+	1. For his proper initial UI discussion with me, and those that'll follow. 
+	2. For looking over the map schema as a GIS programmer so it can be more than a demo. 
+
+- Nick Sussmilch
+
+	1. For encouraging me to think about colour more on the selection screen.
+	2. For his in progress work of compiling sample content for the later mockups, and his excitement at all the possibilities. 
