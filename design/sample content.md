@@ -4,6 +4,8 @@ This file represents a start to compiling sample content to design a scalable co
 
 ## Schemas ##
 
+The sites listed here are merely realistic sample content, and does not represent any preference or affiliation of any RepoTheWeb hackers. 
+
 - doc (save/view documents)
 
 	- docs.google.com
@@ -80,7 +82,6 @@ This file represents a start to compiling sample content to design a scalable co
 	- sourceforge.com
 	- launchpad.net
 	- bitbucket.org
-
 
 - mailto (sends an email)
 
