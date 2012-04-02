@@ -1010,7 +1010,7 @@ require(
 						}
 
 						$(function() {
-						var forms = document.getElementsByTagName('form');
+						var forms = document.querySelectorAll('form');
 						for (var i; i < forms.length; i++) {
 							utils.on(forms[i], 'submit', submit);
 						}
