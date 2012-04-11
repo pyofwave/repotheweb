@@ -116,7 +116,7 @@ Sets the "controls" rendered on top of the map. The meaning of this is left leni
 
 - zoom
 - pan
-- type
+- type -- allows the user to set the type property. 
 - scale
 
 Default is service dependent. 
