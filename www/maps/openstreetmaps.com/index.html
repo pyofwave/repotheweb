@@ -39,14 +39,29 @@
 	</script>
 	<script>
 		var OL = OpenLayers, markers, map; // need a global reference to markers and map.
+		function norm(coord, proj) {
+			return new OL.LonLat(coord[1], coord[2]).transform(
+				new OL.Projection("EPSG:"+proj), new OL.Projection("EPSG:4326"));
+		}
 
 		// setup icon
-		// var size = new OpenLayers.Size(21,25), offset = new OpenLayers.Pixel(-(size.w/2), -size.h), icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
+		var size = new OpenLayers.Size(21,25), offset = new OpenLayers.Pixel(-(size.w/2), -size.h), icon = new OpenLayers.Icon('http://www.openlayers.org/dev/img/marker.png', size, offset);
 		var locSchemas = {
+			'coord' : function(coord, proj) {
+				var coord = coord.split(',');
+				markers.addMarker(norm(coord, proj), icon.clone());
+			},
 			'address' : function(address) {
 				/* Geocode address */
 				// call nomination: nomination.openstreetmaps.org/search?q=%s&format=json
-				// markers.addMarker(new OL.LonLat(res.lon, res.lat),icon.clone());
+				OL.Request.GET({
+					url : "nomination.openstreetmaps.org/search", 
+					params : {format : 'json', q : address },
+					success : function(request) {
+						result = JSON.parse(request.send().responseText);
+						markers.addMarker(new OL.LonLat(res.lon, res.lat),icon.clone());
+					}
+				});
 			},
 			'gps' : function() {
 				/* Load user's geolocation */
@@ -56,16 +71,18 @@
 			map = new OL.Map("map");
 			var mapnik = new OL.Layer.OSM();
 			map.addLayer(mapnik);
-			markers = new OL.layer.Markers("Locations")
+			markers = new OL.Layer.Markers("Locations")
 			map.addLayer(markers);
 			map.zoomToMaxExtent();
 			if (location.hash) {
 				var mapURL = parseUri(location.hash.substr(1));
-				var path = mapURL.path.split('&'), query = mapURL.queryKey, zoom = mapURL.anchor;
-				for (var i; i < path.length; i++) {
+				var path = mapURL.path.substr(1).split('&'), query = mapURL.queryKey, zoom = mapURL.anchor;
+				for (var i=0; i < path.length; i++) {
 					var parts = path[i].split('/'),
 						schema = parts[0].split(':');
-					locSchemas[schema[0]](parts.slice(1), schema[1]);
+					parts = parts.slice(1);
+					parts.push(schema[1]);
+					locSchemas[schema[0]].apply(null, parts);
 				}
 
 				/* Zoom */
