@@ -119,11 +119,11 @@ Sets the "controls" rendered on top of the map. The meaning of this is left leni
 - type
 - scale
 
-Default is service dependant. 
+Default is service dependent. 
 
 ###style###
 
-This paramater is optional for implementation. It's value is a URL to a GSS file to be used to style the map. GSS is defined later in this standard.
+This paramater is optional for implementation. It's value is a URL to a SLD file to be used to style the map. 
 
 ###dir###
 
@@ -164,70 +164,8 @@ The Properties the Cross Document Messaging, as defined in the previous two subs
 - lang -- The language the map is rendered in, as 2 ISO country codes seperated by a dash (-) in a strong.
 - locale -- The locale conventions the map is rendered in, as an ISO country.
 - controls -- An array of strings representing the rendered controls as in the control paramater. 
-- style -- The URL to a GSS file as a string used to render the map. 
+- style -- The URL to a SLD file as a string used to render the map. 
 
-##GSS##
+## SLD ##
 
-GSS is a file type created for this standard which follows CSS syntax but with special properties and selectors. It is a more polished version of Cartagen's GSS. 
-
-The specific defaults for GSS are not defined as they're up to the mapping service. Still requires some work. 
-
-##selectors##
-
-GSS has types, tags, and names to describe it's objects which roughly corrolate to CSS/HTML elements, classes, and IDs. Each of these GSS bases use the same syntax as their corralating CSS/HTML equivalant. 
-
-###types###
-
-A type describe what sort of shape and structure an object has. There are 3 types:
-
-- node
-- way
-- relation
-
-###tags###
-
-A tag describes what an object is. Since there's so many types in the world, this standard does not attempt to standardize them. They're in the form domain-name, where both the replacements for domain and name are defined in seperate standards.
-
-###names###
-
-The geographically unique name of a location. This can be anything. 
-
-###psuedoclasses###
-
-The CSS psuedoclasses are also present in GSS.
-
-##properties##
-
-Unlike HTML, GSS styles visual elements instead of text, and so has different properties, but fewer. These properties or loosely derived from W3C's 2D Canvas standard.
-
-###fill###
-
-Controls the style inside the shape created by the object. It's a shortcut to it's subproperties:
-
-- color -- The fill color, accepts any CSS color. Defaults to white.
-- image -- A tag name or url call. In a way, renders as a pattern while on a node, renders as a single image
-
-The values for the subproperties may appear in any order.
-
-###stroke###
-
-Controls the style of the border around the shape created by the object. It's a shortcut to it's subproperties:
-
-- color -- The line color, accepts any CSS color. Defaults to black.
-- width -- The line width, accepts any CSS size that translates to pixels or the values "none", "thin", "medium", or "thick". Defaults to "none".
-- cap -- The line cap, accepts the values "butt", "round", or "square". Defaults to "butt".
-- join -- The style for bends in the line, accepts the values "round", "bevel", and "miter" defaults to "miter".
-
-The values for the subproperties may appear in any order.
-
-###visible###
-
-Value can be "visible", indicating it appears on the map, or "none" indicating that it does not. 
-
-###font###
-
-All the CSS font, text, and related properties are present in GSS to render the name of the object. 
-
-###z-index###
-
-As in CSS.
+Styled Layer Descriptor, defined at http://portal.opengeospatial.org/files/?artifact_id=22364
