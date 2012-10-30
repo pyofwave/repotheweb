@@ -1,4 +1,4 @@
-# Theoretical Usage Patterns #
+# Use Case #
 
 As part of understanding how to create a nice UI that fits naturally, I am attempting to theorize on how users may use the interface before I design it. 
 
@@ -31,3 +31,7 @@ It is also important to understand what the user would understand, and I believe
 I find myself telling friends and family that RepoTheWeb is:
 
 	Choice over the services you use to view web data. 
+
+# Utility Ideas #
+
+An interesting utility feature for RepoTheWeb is to provide URL-based configuration as an alternative to HTML-based configuration. This could be used, for example, by IT help desks to fix complaints about RepoTheWeb automatic redirection and for users to share defaults. 
