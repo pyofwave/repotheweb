@@ -1,0 +1,52 @@
+<html>
+<head>
+	<title>Map protocol handlers - config</title>
+	<link rel="stylesheet" href="multiples.css" />
+</head>
+<body>
+	<aside>
+        <p><a href="index.html" title="View all Protocols.">All Protocols</a></p>
+        <hr />
+		<ul class="nobullets">
+			<li>
+				<input type="checkbox" value="programming" name="tags" id="tags-programming" />
+				<label for="tags-programming">Programming</label>
+			</li>
+			<li><label for="other-tag"><input type="checkbox" value="?" name="tags" /></label>
+				<input type="text" name="tagnew" id="other-tag" />
+			</li>
+		</ul>
+	</aside>
+	<div id="content">
+		<h1>map:// Handlers
+			<a href="share?to=openstreetmap.org&fav=/favicon.ico&touch=/appletouch.png&desc=View+map+on+OSM" 
+				title="Send this link to friends to set openstreetmap.org as their default map:// link handler"
+				onclick="prompt('Copy this address to share openstreetmaps.org service with freinds:', this.href); return false;">Share</a></h1>
+		<ul class="nobullets">
+			<li title="Set openstreetmap.org to automatically handle map:// links.">
+				<input type="radio" name="handler" value="osm" id="handler-osm" />
+				<label for="handler-osm"><img src="sites/osm.ico" />
+					View map on OSM (<b>openstreetmap.org</b>)</label>
+			</li>
+			<li title="Set maps.google.com to automatically handle map:// links.">
+				<input type="radio" name="handler" value="google" id="handler-google" />
+				<label for="handler-google"><img src="sites/gmaps.ico" />
+					Locate on Google Maps (<b>maps.google.com</b>)</label>
+			</li>
+		</ul>
+		<hr />
+		<ul class="nobullets split2">
+			<li title="Ask which service to open map:// links with.">
+				<input type="radio" name="handler" value="none" id="handler-none" />
+				<label for="handler-none">Ask each time</label>
+			</li>
+			<li title="Hand map:// links to your operating system to handle.">
+				<input type="radio" name="handler" value="system" id="handler-system" />
+				<label for="handler-system">Hand to operating system</label>
+			</li>
+		</ul>
+		<footer>Select a handler to set it to automatically handle map:// links.
+			<a href="https://github.com/mozilla/repotheweb" title="Visit our repository.">Contribute</a></footer>
+	</div>
+</body>
+</html>

@@ -1,0 +1,70 @@
+/* general */
+* {padding: 0; margin: 0}
+ul, ol { padding-left: 20px}
+a:link, a:visited {color: #333}
+h1 a, footer a {
+	float: right;
+	font-size: 12pt;
+	font-weight: normal;
+	padding: 5px;
+}
+h1 {border-bottom: thin solid #006}
+
+/* sidebar */
+aside {
+	float: left;
+	width: 38%;
+	background: #006;
+	height: 100%;
+    
+    font-weight: bold;
+	color: #aaa;
+}
+aside > * {margin: 10px 0;}
+aside a:link, aside a:visited {color: #aaa;}
+input[type=search] {
+	width: 100%;
+	margin: 5px 0;
+}
+
+/* main content */
+div#content {
+	margin-left: 38%; /* set to true golden ratio */
+}
+footer {
+	position: absolute;
+	bottom: 0;
+	width: 62%;
+	background: #FFD373;
+}
+
+/* grid layout */
+ul.nobullets {
+	list-style: none;
+	padding: 0;
+}
+ul.multiple li a {
+	float: left;
+	width: 120px; height: 120px;
+	margin: 5px;
+	border: thin solid #FFD373;
+	border-radius: 10px;
+	text-align: center;
+	
+	text-decoration: none;
+	-moz-transition: all 2s;
+}
+ul.multiple li a:hover {
+	background: #FFD373;
+	
+	background-image: -webkit-gradient(linear, 0% 0%, 0% 100%, from(#fff), to(#ffd373));
+	background-image: -webkit-linear-gradient(top, #fff, #ffd373);
+	background-image:    -moz-linear-gradient(top, #fff, #ffd373);
+	background-image:     -ms-linear-gradient(top, #fff, #ffd373);
+	background-image:      -o-linear-gradient(top, #fff, #ffd373);
+}
+ul.multiple li img {width: 100px;}
+.split2  > *{
+	width: 50%;
+	float: left;
+}
