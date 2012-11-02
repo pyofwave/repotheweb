@@ -1,0 +1,16 @@
+aside {
+	float: left;
+	position: fixed; /* No scrolling */
+	width: 38%;
+	height: 100%;
+}
+div#content {
+	margin-left: 38%; /* Smaller end of golden ratio */
+}
+footer {
+	width: 62%;left: 38%;
+}
+aside .theme-box {
+	display: block; position: fixed; bottom: 0;
+	text-align: center; width: 38%;
+}

@@ -1,3 +1,23 @@
+/* This UI design for the repotheweb config interface 
+*  is optimized to work across various devices and to 
+*  be highly scalable independant of how much the user
+*  uses it or what device they use. 
+* 
+* Scalability is largely accomplished by using a small
+*  multiple design as described in Escaping Flatland 
+*  by Edwarde Tufte. Favicons are pixilated on the 
+*  index page to aid consistancy, a key component of 
+*  small multiple designs. 
+*
+* Simplicity has been achieved by embracing common web
+*  components of links and forms, the use of a visually
+*  appealing Golden ratio, and a complementary color
+*  scheme designed to look utilitarian. 
+* 
+* A share feature is included to add both a fun and 
+*  convenience factors to the design while tagging in
+*  the sidebar helps manage larger collections of 
+*  protocols. */
 /* general */
 * {padding: 0; margin: 0}
 ul, ol { padding-left: 20px}
@@ -12,14 +32,12 @@ h1 {border-bottom: thin solid #006}
 
 /* sidebar */
 aside {
-	float: left;
-	width: 38%;
 	background: #006;
-	height: 100%;
     
     font-weight: bold;
 	color: #aaa;
 }
+aside .theme-box {display: none;}
 aside > * {margin: 10px 0;}
 aside a:link, aside a:visited {color: #aaa;}
 input[type=search] {
@@ -28,20 +46,19 @@ input[type=search] {
 }
 
 /* main content */
-div#content {
-	margin-left: 38%; /* set to true golden ratio */
-}
+div#content {padding-bottom: 50px;}
+.clear {clear: both;}
 footer {
-	position: absolute;
+	position: fixed;
 	bottom: 0;
-	width: 62%;
+	width: 100%;
 	background: #FFD373;
 }
 
 /* grid layout */
 ul.nobullets {
 	list-style: none;
-	padding: 0;
+	padding: 2;
 }
 ul.multiple li a {
 	float: left;

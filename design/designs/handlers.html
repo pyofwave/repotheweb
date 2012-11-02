@@ -2,6 +2,8 @@
 <head>
 	<title>Map protocol handlers - config</title>
 	<link rel="stylesheet" href="multiples.css" />
+	<link rel="stylesheet" media="screen and (min-width: 430px)" href="desktop.css" />
+	<link rel="shortcut icon" href="config.ico" />
 </head>
 <body>
 	<aside>
@@ -16,6 +18,13 @@
 				<input type="text" name="tagnew" id="other-tag" />
 			</li>
 		</ul>
+		<p class="theme-box">
+			<label for="theme">Theme</label>
+			<select name="theme" id="theme">
+				<option value="multiples.css,desktop.css">Multiples Light</option>
+				<option value="multiplesdark.css,desktop.css">Multiples Dark</option>
+			</select>
+		</p>
 	</aside>
 	<div id="content">
 		<h1>map:// Handlers
@@ -25,7 +34,7 @@
 		<ul class="nobullets">
 			<li title="Set openstreetmap.org to automatically handle map:// links.">
 				<input type="radio" name="handler" value="osm" id="handler-osm" />
-				<label for="handler-osm"><img src="sites/osm.ico" />
+				<label for="handler-osm"><img src="sites/osm.ico" width="16px" />
 					View map on OSM (<b>openstreetmap.org</b>)</label>
 			</li>
 			<li title="Set maps.google.com to automatically handle map:// links.">
@@ -45,6 +54,7 @@
 				<label for="handler-system">Hand to operating system</label>
 			</li>
 		</ul>
+		<div class="clear"></div>
 		<footer>Select a handler to set it to automatically handle map:// links.
 			<a href="https://github.com/mozilla/repotheweb" title="Visit our repository.">Contribute</a></footer>
 	</div>

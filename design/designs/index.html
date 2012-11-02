@@ -2,6 +2,8 @@
 <head>
 	<title>Protocol Handlers - Configure</title>
 	<link rel="stylesheet" href="multiples.css" />
+	<link rel="stylesheet" media="screen and (min-width: 320px)" href="desktop.css" />
+	<link rel="shortcut icon" href="config.ico" />
 </head>
 <body>
 	<aside>
@@ -9,8 +11,13 @@
 		<ul>
 			<li><a href="#programming" title="View protocols tagged 'programming'">Programming</a></li>
 		</ul>
-	</aside>
-	</aside>
+		<p class="theme-box">
+			<label for="theme">Theme</label>
+			<select name="theme" id="theme">
+				<option value="multiples.css,desktop.css">Multiples Light</option>
+				<option value="multiplesdark.css,desktop.css">Multiples Dark</option>
+			</select>
+		</p>	</aside>
 	<div id="content">
 		<h1>Protocols 
 			<a href="#" title="Please drag to your bookmarks for later access to this page.">Protocol Handler Config</a></h1>
@@ -36,6 +43,7 @@
 				<p>map</p>
 			</a></li>
 		</ul>
+		<div class="clear"></div>
         <footer>Click a protocol to configure it's defaults. 
 			<a href="https://github.com/mozilla/repotheweb" title="Visit our repository.">Contribute</a></footer>
 	</div>
